@@ -1,23 +1,26 @@
 const checkButton = document.getElementById("check-btn");
 const result = document.getElementById("result");
+const wordInput = document.getElementById("text-input");
 
-const check = () => {
-  const regex = /[^a-zA-Z\d]/g;
-  const wordInput = document
-    .getElementById("text-input")
-    .value.replace(regex, "")
-    .toLowerCase();
-  if (wordInput === "") {
+// cleans string and returns if string is a palindrome
+const palindromeCheck = (str) => {
+  const cleanStr = str.replace(/[^a-zA-Z\d]/g, "").toLowerCase();
+  return cleanStr === cleanStr.split("").reverse().join("");
+};
+
+// function for Check Button on-click event
+const getResult = () => {
+  const wordValue = wordInput.value.trim();
+
+  if (wordValue === "") {
     alert("Please input a value");
-  } else if (wordInput === wordInput.split("").reverse().join("")) {
-    result.innerText = `${
-      document.getElementById("text-input").value
-    } is a palindrome`;
   } else {
-    result.innerText = `${
-      document.getElementById("text-input").value
-    } is not a palindrome`;
+    const message = palindromeCheck(wordValue)
+      ? `${wordValue} is a palindrome`
+      : `${wordValue} is not a palindrome`;
+
+    result.innerText = message;
   }
 };
 
-checkButton.addEventListener("click", check);
+checkButton.addEventListener("click", getResult);
